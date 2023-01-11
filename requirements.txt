@@ -1,0 +1,11 @@
+ numpy
+ nltk
+ gensim
+ scikit-learn
+ PyDictionary
+ fuzzywuzzy
+ python-Levenshtein
+ pandas
+ py-stringmatching
+ tkinter
+ python-docx
