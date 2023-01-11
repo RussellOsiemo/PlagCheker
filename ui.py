@@ -17,7 +17,18 @@ def upload_document():
 def run_plagiarism_checker():
     global filepath
     if filepath:
-        text = extract_text_from_docx(filepath)
+        doc = Document(filepath)
+        text = [para.text for para in doc.paragraphs]
+        # here you can also extract details like author, title, date created, last modification etc
+        author = doc.core_properties.author
+        title = doc.core_properties.title
+        created = doc.core_properties.created
+        modified = doc.core_properties.modified
+        print("author: ",author)
+        print("title: ",title)
+        print("created: ",created)
+        print("modified: ",modified)
+        print("text: ", '\n'.join(text))
         print(text)
     else:
         print("No file selected")
