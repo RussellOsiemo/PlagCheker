@@ -18,9 +18,9 @@ def search_documents(text):
         documents.append(document.text)
     return documents
 
-def check_plagiarism(filepath):
+def check_plagiarism(text):
     """Compares a given document to online documents and returns a dictionary of plagiarism ratios"""
-    text = extract_text_from_docx(filepath)
+    text = extract_text_from_docx(text)
     online_documents = search_documents(text)
     plagiarism_ratios = {}
     for online_document in online_documents:

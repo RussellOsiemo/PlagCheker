@@ -1,22 +1,23 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
-from docx import Document
 from plag import check_plagiarism, extract_text_from_docx
 
 
-# filepath = ''
-
 def run_plagiarism_checker():
     global filepath
-    code_snippet = extract_text_from_docx(filepath)
-    plagiarism_ratios = check_plagiarism(code_snippet)
+    plagiarism_ratios = check_plagiarism(filepath)
+    result_text = "No plagiarism found"
+    urls = ""
     if plagiarism_ratios:
         for online_code, ratio in plagiarism_ratios.items():
             if ratio > 0.8:
-                print(f"Possible plagiarism found in code: \n{online_code}")
-    else:
-        print("No plagiarism found")
+                result_text = f"Possible plagiarism found in code: \n{online_code}"
+                urls += online_code + "\n"
+                break
+    result_label.config(text=result_text)
+    url_label.config(text=urls)
+
 
 def upload_document():
     global filepath
@@ -28,23 +29,20 @@ def upload_document():
     return filepath
 
 
-
-
 root = tk.Tk()
 root.title("Plagiarism Checker")
 root.config(bg="gray")
+
 # Adding widgets to the root window
 Label(root, text = 'Plagiarism Checker',
       font =('Verdana', 15)).pack(side = TOP, pady = 10)
-      # specify size of window.
+
 root.geometry("350x300")
-# setting the minimum size of the root window
 root.minsize(250, 200)
-# text 
+
 T = Text(root,bg="white", height=3, width=100, font=('Verdana',12))
 text= "This is simple plagiarism checker that checks plagiarism in a document."
 T.pack()
-# insert the text 
 T.insert(tk.END, text)
 
 label_text = tk.StringVar()
@@ -57,5 +55,10 @@ upload_button.pack()
 
 run_button = tk.Button(text="Run", command=run_plagiarism_checker)
 run_button.pack()
+
+result_label = tk.Label(root, text="")
+result_label.pack()
+url_label = tk.Label(root, text="")
+url_label.pack()
 
 root.mainloop()
