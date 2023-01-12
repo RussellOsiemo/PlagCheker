@@ -2,8 +2,21 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
 from docx import Document
+from plag import check_plagiarism, extract_text_from_docx
 
-filepath = ''
+
+# filepath = ''
+
+def run_plagiarism_checker():
+    global filepath
+    code_snippet = extract_text_from_docx(filepath)
+    plagiarism_ratios = check_plagiarism(code_snippet)
+    if plagiarism_ratios:
+        for online_code, ratio in plagiarism_ratios.items():
+            if ratio > 0.8:
+                print(f"Possible plagiarism found in code: \n{online_code}")
+    else:
+        print("No plagiarism found")
 
 def upload_document():
     global filepath
@@ -14,24 +27,8 @@ def upload_document():
         label_text.set("No File Selected")
     return filepath
 
-def run_plagiarism_checker():
-    global filepath
-    if filepath:
-        doc = Document(filepath)
-        text = [para.text for para in doc.paragraphs]
-        # here you can also extract details like author, title, date created, last modification etc
-        author = doc.core_properties.author
-        title = doc.core_properties.title
-        created = doc.core_properties.created
-        modified = doc.core_properties.modified
-        print("author: ",author)
-        print("title: ",title)
-        print("created: ",created)
-        print("modified: ",modified)
-        print("text: ", '\n'.join(text))
-        print(text)
-    else:
-        print("No file selected")
+
+
 
 root = tk.Tk()
 root.title("Plagiarism Checker")

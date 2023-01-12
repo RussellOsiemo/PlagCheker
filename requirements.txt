@@ -4,8 +4,11 @@
  scikit-learn
  PyDictionary
  fuzzywuzzy
+ beautifulsoup4
  python-Levenshtein
  pandas
  py-stringmatching
  tkinter
  python-docx
+ docxpy
+
